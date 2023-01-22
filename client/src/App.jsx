@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 function App() {
   const [values,setValues]= useState({
-    hostname:"",
     username:"",
     password:"",
   });
@@ -13,15 +12,6 @@ function App() {
   const inputs=[
     {
       id:1,
-      name: "hostname",
-      type: "text",
-      placeholder: "Hostname",
-      label: "Hostname",
-      errormsg: "Cannot be empty",
-      required: true
-    },
-    {
-      id:2,
       name: "username",
       type: "text",
       placeholder: "Username",
@@ -30,7 +20,7 @@ function App() {
       required: true
     },
     {
-      id:3,
+      id:2,
       name: "password",
       type: "password",
       placeholder: "Password",
@@ -56,11 +46,11 @@ function App() {
   return (
     <div className='app'>
       <form onSubmit={handleSubmit}>
-        <h1>Add host</h1>
+        <h1>Sign In</h1>
         {inputs.map((input)=>( 
         <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
         ))}
-        <button>Submit</button>
+        <button>LOGIN</button>
       </form>
     </div>  );
 }
