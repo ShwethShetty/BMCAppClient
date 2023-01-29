@@ -4,14 +4,16 @@ import { useState,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-  function LandingPage(props) {
+  function  SignUpPage(props) {
       const [values,setValues]= useState({
         username:"",
         password:"",
+        confirmPassword:"",
       });
       const navigate = useNavigate();
       const [error, setError] = useState(false);
       document.body.style = 'background: cornflowerblue';
+
     
       const inputs=[
         {
@@ -33,15 +35,26 @@ import axios from 'axios';
           required: true,
           pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
         },
+        {
+          id:3,
+          name: "confirmPassword",
+          type: "password",
+          placeholder: "Confirm Password",
+          label: "Confirm Password",
+          errormsg: "Must be same as password",
+          required: true,
+          pattern: values.password
+        }
     
       ]
     
       const handleSubmit= async (e)=>{
         e.preventDefault();
-        console.log(values);
+        console.log(values.username,values.password);
+        console.log(values)
         try {
-          const res = await axios.post('http://localhost:5000/api/users/login/', 
-          values,
+          const res = await axios.post('http://localhost:5000/api/users/register/', 
+          {username:values.username,password:values.password},
           {
             headers: {
               "Content-type": "application/json",
@@ -55,7 +68,7 @@ import axios from 'axios';
           } else {
             setError(false)
             console.log(props)
-            navigate("/clicreds",{ state: { token:res.data.token, cliVerified: false }})
+            navigate("/list",{ state: { token:res.data.token }})
           }
         } catch (err) {
           console.log(err);
@@ -68,24 +81,21 @@ import axios from 'axios';
     
       return (
         <div className='landing'>
-          <div className='backDrop'>
-            <form onSubmit={handleSubmit}>
-              <h1>Sign In</h1>
-              {inputs.map((input)=>( 
-              <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
-              ))}
-              { error &&
-                <div className="invalidcred">
-                INCORRECT USERNAME OR PASSWORD
-              </div>
-              }
-              <button>LOGIN</button>
-            </form>
-          </div>
     
-          
+          <form onSubmit={handleSubmit}>
+            <h1>Sign Up</h1>
+            {inputs.map((input)=>( 
+            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
+            ))}
+            { error &&
+              <div className="invalidcred">
+              INCORRECT USERNAME OR PASSWORD
+            </div>
+            }
+            <button>LOGIN</button>
+          </form>
         </div>  );
     }
   
-  export default LandingPage;
+  export default SignUpPage;
   

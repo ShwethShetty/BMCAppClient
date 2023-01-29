@@ -1,14 +1,14 @@
 
-.app {
+/* .app {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: cornflowerblue;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* height: 100vh; */
+  /* background-color: cornflowerblue; */
   /* background-image: url('login-bg.jpg');
   background-size:cover;
   background-repeat: no-repeat; */
-}
+/* } */ 
 
 form{
   background-color: white;
@@ -46,4 +46,12 @@ button{
   font-size: 12px;
   color: red;
   padding: 4px;
+}
+
+.pagination{
+  margin: 1rem auto;
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
 }

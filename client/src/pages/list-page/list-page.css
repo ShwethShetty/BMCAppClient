@@ -1,14 +1,20 @@
 
-.app {
+/* .dashboard {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: cornflowerblue;
+    align-items: left;
+    justify-content: left;
+    /* height: 100vh; */
+    /* background-color: white; */
     /* background-image: url('login-bg.jpg');
     background-size:cover;
     background-repeat: no-repeat; */
-  }
+  /* } */ */
+
+
+  /* .dashboard{
+    width: 100%;
+    background-color: aqua;
+  } */
   
   form{
     background-color: white;
@@ -46,4 +52,22 @@
     font-size: 12px;
     color: red;
     padding: 4px;
+  }
+
+
+  .list{
+    width: 30%;
+    float: left;
+    background-color: white;
+  }
+
+  .attrValue{
+    width: 70%;
+    float: right;
+    background-color: aqua;
+    height: 100%;
+  }
+
+  span{
+    color: black;
   }

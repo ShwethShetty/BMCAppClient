@@ -1,17 +1,23 @@
 import '../landing-page/landing-page.css';
 import FormInput from '../../components/forminput';
 import { useState,useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
 
-  function LandingPage(props) {
+  function  CliCredsPage(props) {
       const [values,setValues]= useState({
         username:"",
         password:"",
       });
       const navigate = useNavigate();
+      const {state} = useLocation();
+      const { token } = state;
+      // console.log(token);
       const [error, setError] = useState(false);
       document.body.style = 'background: cornflowerblue';
+      
+      // console.log(state);
+
     
       const inputs=[
         {
@@ -32,30 +38,32 @@ import axios from 'axios';
           errormsg: "Must contain at least 1 char and 1 number",
           required: true,
           pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
-        },
+        }
     
       ]
     
       const handleSubmit= async (e)=>{
         e.preventDefault();
-        console.log(values);
+        console.log(values.username,values.password);
+        console.log(values)
         try {
-          const res = await axios.post('http://localhost:5000/api/users/login/', 
-          values,
+          const res = await axios.post('http://localhost:5000/api/entities/auth', 
+          {username:values.username,password:values.password},
           {
             headers: {
               "Content-type": "application/json",
+              "Authorization": token
             }
           }
           )
-          console.log(res.data.status);
+          console.log(res.data.result);
           console.log(res.data)
-          if (res.data.status === 'failure') {
+          if (res.data.result !== 'Success') {
             setError(true)
           } else {
             setError(false)
             console.log(props)
-            navigate("/clicreds",{ state: { token:res.data.token, cliVerified: false }})
+            navigate("/list",{ state: { token:res.data.token, cliVerified: true }})
           }
         } catch (err) {
           console.log(err);
@@ -68,24 +76,21 @@ import axios from 'axios';
     
       return (
         <div className='landing'>
-          <div className='backDrop'>
-            <form onSubmit={handleSubmit}>
-              <h1>Sign In</h1>
-              {inputs.map((input)=>( 
-              <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
-              ))}
-              { error &&
-                <div className="invalidcred">
-                INCORRECT USERNAME OR PASSWORD
-              </div>
-              }
-              <button>LOGIN</button>
-            </form>
-          </div>
     
-          
+          <form onSubmit={handleSubmit}>
+            <h1>CLI Credentials Validation</h1>
+            {inputs.map((input)=>( 
+            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
+            ))}
+            { error &&
+              <div className="invalidcred">
+              INCORRECT USERNAME OR PASSWORD
+            </div>
+            }
+            <button>Verify</button>
+          </form>
         </div>  );
     }
   
-  export default LandingPage;
+  export default CliCredsPage;
   
