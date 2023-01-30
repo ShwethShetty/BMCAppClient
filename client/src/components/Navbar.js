@@ -1,19 +1,34 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+// import { Fragment } from 'react'
+import { Disclosure} from '@headlessui/react'
+import { Bars3Icon,  XMarkIcon } from '@heroicons/react/24/outline'
 import styles from '../styles/Navbar.module.css'
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {getToken} from "../redux/user/user.selector";
 
-const navigation = [
+var navigation = [
   { name: 'Console', href: '#', current: false },
   { name: 'Hosts', href: '#', current: false },
   { name: 'Add Host', href: '#', current: false },
 ]
 
+var usualNav=navigation
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Navbar = () => {
+const Navbar = ({fetchedToken}) => {
+  if (fetchedToken==='')
+  {
+    navigation=[{ name: 'Register', href: '#', current: false },
+    { name: 'Login', href: '#', current: false },
+    ]
+  }
+  else
+  {
+    navigation=usualNav
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -82,5 +97,8 @@ const Navbar = () => {
   )
 }
 
+const mapStateToProps = createStructuredSelector({
+  fetchedToken: getToken,
+});
 
-export default Navbar
+export default connect(mapStateToProps,null)(Navbar);

@@ -1,8 +1,9 @@
 import '../landing-page/landing-page.css';
 import FormInput from '../../components/forminput';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
+// import{  setToken } from "../../redux/user/user.actions";
 
   function  CliCredsPage(props) {
       const [values,setValues]= useState({
@@ -12,11 +13,11 @@ import axios from 'axios';
       const navigate = useNavigate();
       const {state} = useLocation();
       const { token } = state;
-      // console.log(token);
+      console.log(token);
       const [error, setError] = useState(false);
       document.body.style = 'background: cornflowerblue';
       
-      // console.log(state);
+      console.log(state);
 
     
       const inputs=[
@@ -64,6 +65,9 @@ import axios from 'axios';
             setError(false)
             console.log(props)
             navigate("/list",{ state: { token:res.data.token, cliVerified: true }})
+            // console.log("Setting token..")
+            // await setToken(res.data.token)
+            // navigate("/list")
           }
         } catch (err) {
           console.log(err);

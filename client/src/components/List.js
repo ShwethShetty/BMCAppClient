@@ -1,21 +1,29 @@
 import styles from '../styles/List.module.css'
 import { useState ,useEffect} from 'react';
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { ListContainer, ListItem } from "../styles";
-import { DragHandle } from "../patials/DragHandle";
+import { DragHandle } from "../partials/DragHandle";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {getToken} from "../redux/user/user.selector";
 
-const List = () => {
-    const {state} = useLocation();
-    const { token, cliVerified } = state;
-    console.log(token)
+const List = ({fetchedToken}) => {
+    // const {state} = useLocation();
+    // const { token, cliVerified } = state;
+    const navigate=useNavigate()
+    console.log("fetched token in lsit component",fetchedToken)
     const [list,setList]=useState([]);
     document.body.style = 'background: white';
 
     // console.log(state);
     
     useEffect(() => {
-        
+        if(fetchedToken==='')
+        {
+          navigate('/')
+        }
+
       // if (cliVerified) {
         try {
           async function fetchData(){
@@ -24,7 +32,7 @@ const List = () => {
            {
              headers: {
                "Content-type": "application/json",
-               "Authorization":token
+               "Authorization":fetchedToken
              }
            }
            )
@@ -44,6 +52,7 @@ const List = () => {
          
          }
       // }
+      // eslint-disable-next-line
     },[]);
     
     console.log(list);
@@ -80,5 +89,10 @@ const List = () => {
         
     //   </div>  
   
-  export default List;
+    const mapStateToProps = createStructuredSelector({
+      fetchedToken: getToken,
+    });
+    
+  export default connect(mapStateToProps,null)(List);
+
   

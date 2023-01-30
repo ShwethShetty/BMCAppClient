@@ -1,16 +1,21 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import List from './List'
+import List from './List';
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {getToken} from "../redux/user/user.selector";
 
-const HostAdd = (props) => {
+const HostAdd = ({fetchedToken}) => {
     const [values,setValues]= useState({
         username:"",
         password:"",
     });
     const navigate = useNavigate();
-    const {state} = useLocation();
-    const { token } = state;
+    // const {state} = useLocation();
+    // const { token } = state;
+    // const token=getToken();
+    console.log("token is",fetchedToken)
     const [error, setError] = useState(false);
 
     const handleSubmit= async (e)=>{
@@ -23,7 +28,7 @@ const HostAdd = (props) => {
             {
                 headers: {
                 "Content-type": "application/json",
-                "Authorization": token
+                "Authorization": fetchedToken
                 }
             }
             )
@@ -33,8 +38,8 @@ const HostAdd = (props) => {
                 setError(true)
             } else {
                 setError(false)
-                console.log(props)
-                navigate("/list",{ state: { token:res.data.token, cliVerified: true }})
+                // console.log(props)
+                navigate("/list")
             }
         } catch (err) {
             console.log(err);
@@ -83,4 +88,12 @@ const HostAdd = (props) => {
     );
 }
 
-export default HostAdd;
+
+  
+  const mapStateToProps = createStructuredSelector({
+    fetchedToken: getToken,
+  });
+  
+export default connect(mapStateToProps,null)(HostAdd);
+
+

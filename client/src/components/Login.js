@@ -1,13 +1,15 @@
 // import '../landing-page/landing-page.css';
 // import FormInput from '../../components/forminput';
-import FormInput from './forminput';
-import { useState,useEffect, Fragment } from 'react';
+// import FormInput from './forminput';
+import { useState, Fragment } from 'react';
 import { useNavigate } from "react-router-dom";
-import styles from '../styles/Login.module.css'
+// import styles from '../styles/Login.module.css'
 import axios from 'axios';
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
+import{  setToken } from "../redux/user/user.actions";
+import { connect } from "react-redux";
 
-const Login = (props) => {
+const Login = ({setToken}) => {
     const [values,setValues]= useState({
         username:"",
         password:"",
@@ -33,8 +35,11 @@ const Login = (props) => {
         setError(true)
         } else {
         setError(false)
-        console.log(props)
-        navigate("/addhost",{ state: { token:res.data.token, cliVerified: false }})
+        // console.log(props)
+        console.log("settint token")
+        setToken(res.data.token)
+        navigate("/addhost")
+        // navigate("/addhost",{ state: { token:res.data.token, cliVerified: false }})
         }
     } catch (err) {
         console.log(err);
@@ -78,4 +83,13 @@ const Login = (props) => {
     );
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+    setToken:(token)=>dispatch(setToken(token))
+  
+  });
+  
+  
+  
+export default connect(null,mapDispatchToProps)(Login);
+
+// export default Login;

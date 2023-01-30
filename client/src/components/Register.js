@@ -1,11 +1,11 @@
 // import '../landing-page/landing-page.css';
 // import FormInput from '../../components/forminput';
-import FormInput from './forminput';
-import { useState,useEffect, Fragment } from 'react';
+// import FormInput from './forminput';
+import { useState, Fragment } from 'react';
 import { useNavigate } from "react-router-dom";
-import styles from '../styles/Login.module.css'
+// import styles from '../styles/Login.module.css'
 import axios from 'axios';
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
 
 const Register = (props) => {
     const [values,setValues]= useState({

@@ -1,11 +1,11 @@
 import '../list-page/list-page.css'
-import FormInput from '../../components/forminput';
 import { useState ,useEffect} from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { ListContainer, ListItem } from "../../styles";
-import { DragHandle } from "../../patials/DragHandle";
+import { DragHandle } from "../../partials/DragHandle";
 import Navbar from '../../components/Navbar';
+
 
 function ListPage() {
     const {state} = useLocation();
@@ -46,6 +46,7 @@ function ListPage() {
          
          }
       }
+     // eslint-disable-next-line 
     },[]);
     
     console.log(list);
