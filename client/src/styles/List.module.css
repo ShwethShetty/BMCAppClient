@@ -11,12 +11,12 @@
   /* } */
 
 
-  /* .dashboard{
+  .dashboard{
     width: 100%;
     background-color: aqua;
-  } */
+  }
   
-  /* form{
+  form{
     background-color: white;
     padding: 0px 80px;
     border-radius: 10px;
@@ -61,7 +61,7 @@
     background-color: white;
   }
 
-  .attrValue{
+  .attr_value{
     width: 70%;
     float: right;
     background-color: aqua;
@@ -70,4 +70,4 @@
 
   span{
     color: black;
-  } */
+  }

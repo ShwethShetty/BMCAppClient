@@ -1,13 +1,11 @@
-import '../list-page/list-page.css'
-import FormInput from '../../components/forminput';
+import styles from '../styles/List.module.css'
 import { useState ,useEffect} from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import { ListContainer, ListItem } from "../../styles";
-import { DragHandle } from "../../patials/DragHandle";
-import Navbar from '../../components/Navbar';
+import { ListContainer, ListItem } from "../styles";
+import { DragHandle } from "../patials/DragHandle";
 
-function ListPage() {
+const List = () => {
     const {state} = useLocation();
     const { token, cliVerified } = state;
     console.log(token)
@@ -18,7 +16,7 @@ function ListPage() {
     
     useEffect(() => {
         
-      if (cliVerified) {
+      // if (cliVerified) {
         try {
           async function fetchData(){
              const res = await axios.get('http://localhost:5000/api/entities/', 
@@ -45,7 +43,7 @@ function ListPage() {
            console.log(err);
          
          }
-      }
+      // }
     },[]);
     
     console.log(list);
@@ -53,29 +51,34 @@ function ListPage() {
     
   
     return (
-      <div className='dashboard'>
-        <Navbar />
-        <div className='list'>
-          {
-            cliVerified ?
-            <ListContainer>
-              {/* <h2>Entity Types</h2> */}
-              {list.map((item) => (
+        <div className={`${styles.list} basis-1/4`}>
+          <ListContainer>
+            {/* <h2>Entity Types</h2> */}
+            {list.map((item) => (
                 <ListItem>
-                  <DragHandle />
-                  <span>{item}</span>
+                <DragHandle />
+                <span>{item}</span>
                 </ListItem>
-              ))}
-            </ListContainer> :
-            <h1>Please verify credentials for cli</h1>
-          }
+            ))}
+          </ListContainer>
+            {/* {
+                cliVerified ?
+                 :
+                <h1>Please verify credentials for cli</h1>
+            } */}
         </div> 
-        <div className='attrValue'>
-          <h2>Attribute Display</h2>
-        </div>
-        
-      </div>  );
+      );
   }
+
   
-  export default ListPage;
+    //   <div className={`${styles.dashboard}`}>
+    //     <Navbar />
+
+  // <div className='attrValue'>
+        //   <h2>Attribute Display</h2>
+        // </div>
+        
+    //   </div>  
+  
+  export default List;
   

@@ -1,0 +1,9 @@
+.login_page {
+    background-image: url('../server-bg.jpg');
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+
+.login_form {
+    background: white;
+}

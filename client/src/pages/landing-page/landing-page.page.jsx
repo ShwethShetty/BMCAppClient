@@ -67,12 +67,27 @@ import axios from 'axios';
       }
     
       return (
-        <div className='landing'>
-          <div className='backDrop'>
-            <form onSubmit={handleSubmit}>
+        // <div className='landing'>
+        //   <div className='backDrop'>
+        //     <form onSubmit={handleSubmit}>
+        //       <h1>Sign In</h1>
+        //       {inputs.map((input)=>( 
+        //       <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
+        //       ))}
+        //       { error &&
+        //         <div className="invalidcred">
+        //         INCORRECT USERNAME OR PASSWORD
+        //       </div>
+        //       }
+        //       <button>LOGIN</button>
+        //     </form>
+        //   </div>
+        // </div>
+        <div className='h-screen flex items-center justify-center landing'>
+            {/* <form onSubmit={handleSubmit}>
               <h1>Sign In</h1>
               {inputs.map((input)=>( 
-              <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
+                <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
               ))}
               { error &&
                 <div className="invalidcred">
@@ -80,11 +95,9 @@ import axios from 'axios';
               </div>
               }
               <button>LOGIN</button>
-            </form>
-          </div>
-    
-          
-        </div>  );
+            </form> */}
+        </div>  
+      );
     }
   
   export default LandingPage;
