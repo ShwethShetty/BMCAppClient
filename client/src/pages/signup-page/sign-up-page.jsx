@@ -1,101 +1,101 @@
-import '../landing-page/landing-page.css';
-import FormInput from '../../components/forminput';
-import { useState,useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+// import '../landing-page/landing-page.css';
+// import FormInput from '../../components/forminput';
+// import { useState,useEffect } from 'react';
+// import { useNavigate } from "react-router-dom";
+// import axios from 'axios';
 
-  function  SignUpPage(props) {
-      const [values,setValues]= useState({
-        username:"",
-        password:"",
-        confirmPassword:"",
-      });
-      const navigate = useNavigate();
-      const [error, setError] = useState(false);
-      document.body.style = 'background: cornflowerblue';
+//   function  SignUpPage(props) {
+//       const [values,setValues]= useState({
+//         username:"",
+//         password:"",
+//         confirmPassword:"",
+//       });
+//       const navigate = useNavigate();
+//       const [error, setError] = useState(false);
+//       document.body.style = 'background: cornflowerblue';
 
     
-      const inputs=[
-        {
-          id:1,
-          name: "username",
-          type: "text",
-          placeholder: "Username",
-          label: "Username",
-          errormsg: "Cannot be empty",
-          required: true
-        },
-        {
-          id:2,
-          name: "password",
-          type: "password",
-          placeholder: "Password",
-          label: "Password",
-          errormsg: "Must contain at least 1 char and 1 number",
-          required: true,
-          pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
-        },
-        {
-          id:3,
-          name: "confirmPassword",
-          type: "password",
-          placeholder: "Confirm Password",
-          label: "Confirm Password",
-          errormsg: "Must be same as password",
-          required: true,
-          pattern: values.password
-        }
+//       const inputs=[
+//         {
+//           id:1,
+//           name: "username",
+//           type: "text",
+//           placeholder: "Username",
+//           label: "Username",
+//           errormsg: "Cannot be empty",
+//           required: true
+//         },
+//         {
+//           id:2,
+//           name: "password",
+//           type: "password",
+//           placeholder: "Password",
+//           label: "Password",
+//           errormsg: "Must contain at least 1 char and 1 number",
+//           required: true,
+//           pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
+//         },
+//         {
+//           id:3,
+//           name: "confirmPassword",
+//           type: "password",
+//           placeholder: "Confirm Password",
+//           label: "Confirm Password",
+//           errormsg: "Must be same as password",
+//           required: true,
+//           pattern: values.password
+//         }
     
-      ]
+//       ]
     
-      const handleSubmit= async (e)=>{
-        e.preventDefault();
-        console.log(values.username,values.password);
-        console.log(values)
-        try {
-          const res = await axios.post('http://localhost:5000/api/users/register/', 
-          {username:values.username,password:values.password},
-          {
-            headers: {
-              "Content-type": "application/json",
-            }
-          }
-          )
-          console.log(res.data.status);
-          console.log(res.data)
-          if (res.data.status === 'failure') {
-            setError(true)
-          } else {
-            setError(false)
-            console.log(props)
-            navigate("/list",{ state: { token:res.data.token }})
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
+//       const handleSubmit= async (e)=>{
+//         e.preventDefault();
+//         console.log(values.username,values.password);
+//         console.log(values)
+//         try {
+//           const res = await axios.post('http://localhost:5000/api/users/register/', 
+//           {username:values.username,password:values.password},
+//           {
+//             headers: {
+//               "Content-type": "application/json",
+//             }
+//           }
+//           )
+//           console.log(res.data.status);
+//           console.log(res.data)
+//           if (res.data.status === 'failure') {
+//             setError(true)
+//           } else {
+//             setError(false)
+//             console.log(props)
+//             navigate("/list",{ state: { token:res.data.token }})
+//           }
+//         } catch (err) {
+//           console.log(err);
+//         }
+//       }
     
-      const onChange=(e)=>{
-        setValues({...values,[e.target.name]: e.target.value});
-      }
+//       const onChange=(e)=>{
+//         setValues({...values,[e.target.name]: e.target.value});
+//       }
     
-      return (
-        <div className='landing'>
+//       return (
+//         <div className='landing'>
     
-          <form onSubmit={handleSubmit}>
-            <h1>Sign Up</h1>
-            {inputs.map((input)=>( 
-            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
-            ))}
-            { error &&
-              <div className="invalidcred">
-              INCORRECT USERNAME OR PASSWORD
-            </div>
-            }
-            <button>LOGIN</button>
-          </form>
-        </div>  );
-    }
+//           <form onSubmit={handleSubmit}>
+//             <h1>Sign Up</h1>
+//             {inputs.map((input)=>( 
+//             <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
+//             ))}
+//             { error &&
+//               <div className="invalidcred">
+//               INCORRECT USERNAME OR PASSWORD
+//             </div>
+//             }
+//             <button>LOGIN</button>
+//           </form>
+//         </div>  );
+//     }
   
-  export default SignUpPage;
+//   export default SignUpPage;
   

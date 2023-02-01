@@ -5,6 +5,7 @@ import List from './List';
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
+import styles from '../styles/HostAdd.module.css'
 
 const HostAdd = ({fetchedToken}) => {
     const [values,setValues]= useState({
@@ -51,7 +52,7 @@ const HostAdd = ({fetchedToken}) => {
     }
 
     return (
-    <div className="flex">
+    <div className={`flex ${styles.host_add_div}`}>
         <List />
         <div className={`mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8`}>
             <div className={`w-full max-w-md space-y-8 shadow-xl p-4 rounded`}>
