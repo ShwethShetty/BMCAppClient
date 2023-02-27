@@ -7,9 +7,9 @@ import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
 
 var navigation = [
-  { name: 'Console', href: '#', current: false },
+  { name: 'Console', href: '/console', current: false },
   { name: 'Hosts', href: '#', current: false },
-  { name: 'Add Host', href: '#', current: false },
+  { name: 'Add Host', href: '/addhost', current: false },
 ]
 
 var usualNav=navigation

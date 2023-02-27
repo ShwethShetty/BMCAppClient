@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register'
 import Navbar from './components/Navbar'
 import HostAdd from './components/HostAdd'
+import Console from './components/Console';
 import {Fragment} from 'react'
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/list" element={<ListPage/>}/>
             <Route exact path="/addhost" element={<HostAdd/>}/>
+            <Route exact path="/console" element={<Console/>} />
             <Route exact path="/clicreds" element={<CliCredsPage/>}/>
           </Routes>
         </Router>

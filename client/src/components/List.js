@@ -9,15 +9,19 @@ import {getToken} from "../redux/user/user.selector";
 import { ListItem, ListContainer } from '../styles';
 import {DragHandle} from '../partials/DragHandle';
 import Loader from '../components/Loader';
+import DropdownTreeSelect from 'react-dropdown-tree-select'
+import 'react-dropdown-tree-select/dist/styles.css'
+import './List.css'
+import React  from 'react';
+// let map;
 
-const List = ({fetchedToken}) => {
+const List = ({fetchedToken, getInstance}) => {
     const navigate=useNavigate()
-    console.log("fetched token in lsit component",fetchedToken)
-    const [list,setList]=useState([]);
+    // console.log("fetched token in list component",fetchedToken)
     const [loading,setLoading]=useState(true);
-    document.body.style = 'background: white';
 
-    // console.log(state);
+    const [data,setData]=useState({});
+    const [map, setMap] = useState({})
     
     useEffect(() => {
       if(fetchedToken==='')
@@ -27,111 +31,108 @@ const List = ({fetchedToken}) => {
 
       try {
         async function fetchData(){
-            // const res = await axios.get('http://localhost:5000/api/entities/getCompleteTree',
-            
-            const res = await axios.get('http://localhost:5000/api/entities/getCompleteList', 
-          // values,
-          {
-            headers: {
-              "Content-type": "application/json",
-              "Authorization":fetchedToken
+          console.log("Complete Tree called")
+            const res = await axios.get('http://localhost:5000/api/entities/getCompleteTree',
+            {
+              headers: {
+                "Content-type": "application/json",
+                "Authorization":fetchedToken
+              }
             }
-          }
           )
-          
-          // console.log(res.data);
-          // console.log(res.data);
-          setList(res.data);
 
-          if (res.data.status === 'failure') {
+          console.log("Complete Tree call complete")
+          
+          setData(res.data.tree);
+
+          setMap(res.data.displayNameServerPathMap)
+
+          // if (res.data.status === 'failure') {
             
-          } else {
-            setLoading(false)
-          }}
-          console.log(loading)
-          setLoading(true)
+          // } else {
+          //   setLoading(false)
+          // }
+        }
+          // console.log(loading)
+          // setLoading(true)
           fetchData()
           
           
-          console.log(loading)
+          // console.log(loading)
         }
         catch (err) {
-          console.log(err);
+          console.log("Error in List:", err);
         }
       // eslint-disable-next-line
     },[]);
     
-    console.log("List:", list);
+    // console.log("Tree:", data);
+    // console.log("Map:", map);
 
-    // const entityTypesTreeArray = []
     
-    // for (const entityType in list) {
-    //   const instanceTreeArray = []
-    //   list[entityType].forEach(instance => {
-    //     instanceTreeArray.push({
-    //       name: instance
-    //     })
-    //   })
-    //   entityTypesTreeArray.push({
-    //     name: entityType,
-    //     isOpen: false,
-    //     children: instanceTreeArray
-    //   })
+    const returnsTree = (obj) => {
+      const ans=Object.entries(obj).map((e)=>{
+        if(Object.keys(e[1]).length === 0){
+          return ({
+            label:e[0],
+            value:e[0],
+          })
+        }
+        else{
+          return ({
+            label:e[0],
+            value:e[0],
+            children: returnsTree(e[1])
+          })
+        }
+      })
+      // console.log("ans:", ans)
+      return ans
+    }
+    
+
+    // const res={
+    //   "Windows Operating System": {
+    //     "Logical Disks": {
+    //       "_Total": {},
+    //       "Logical Disk (C:)": {
+    //         "Disk Quota Users": {}
+    //       }
+    //     }
+    //   }
     // }
-
-    // console.log('entityTypesTreeArray:', entityTypesTreeArray);
-
-    // const treeState = {
-    //   name: 'root',
-    //   isOpen: true,   // this folder is opened, we can see it's children
-    //   children: entityTypesTreeArray
-    // };
-
+    let renderData = [{}]
+    if (JSON.stringify(data) !== "{}") {
+      renderData = returnsTree(data)
+    }
     
+    const onChange = (currentNode, selectedNodes) => {
+      console.log('onChange::', currentNode, selectedNodes)
+      
+      getInstance(map[currentNode.label])
+    }
+    const onAction = (node, action) => {
+      console.log('onAction::', action, node)
+    }
+    const onNodeToggle = currentNode => {
+      console.log('onNodeToggle::', currentNode)
+    }
 
     return (
         <div className={`basis-1/4 overflow-scroll`}>
-            {console.log(loading)}
-            {loading===true && (<Loader/>)}
-            <ListContainer>
-            {/* <h2>Entity Types</h2> */}
-            {list.map((item) => (
-                <ListItem>
-                <DragHandle />
-                <span>{item}</span>
-                </ListItem>
-            ))}
-          </ListContainer>
-          {/* <FolderTree
-            data={ treeState }
-            showCheckbox={ false }    // default: true
-          /> */}
+            {/* {console.log(loading)} {loading===true && (<Loader/>)} */}
+          <DropdownTreeSelect data={renderData} onChange={onChange} onAction={onAction} onNodeToggle={onNodeToggle} showDropdown={"always"}/>
+
         </div> 
         
 
-        // <DropdownTreeSelect data={data} onChange={onChange} onAction={onAction} onNodeToggle={onNodeToggle} />
       );
   }
-
-  
-        //     {/* {
-        //         cliVerified ?
-        //          :
-        //         <h1>Please verify credentials for cli</h1>
-        //     } */}
-  //     <div className={`${styles.dashboard}`}>
-  //       <Navbar />
-
-  // <div className='attrValue'>
-  //         <h2>Attribute Display</h2>
-  //       </div>
-        
-  //     </div>  
   
     const mapStateToProps = createStructuredSelector({
       fetchedToken: getToken,
     });
     
-  export default connect(mapStateToProps,null)(List);
 
-  
+  // export default connect(mapStateToProps,null)(List);
+  export default React.memo(connect(mapStateToProps,null)(List),(prevProps, nextProps) => true);

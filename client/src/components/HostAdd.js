@@ -9,6 +9,7 @@ import styles from '../styles/HostAdd.module.css'
 
 const HostAdd = ({fetchedToken}) => {
     const [values,setValues]= useState({
+        hostname:"",
         username:"",
         password:"",
     });
@@ -16,16 +17,19 @@ const HostAdd = ({fetchedToken}) => {
     // const {state} = useLocation();
     // const { token } = state;
     // const token=getToken();
-    console.log("token is",fetchedToken)
+    // console.log("token is",fetchedToken)
     const [error, setError] = useState(false);
 
     const handleSubmit= async (e)=>{
         e.preventDefault();
-        console.log(values.username,values.password);
+        console.log("username:", values.username, "password:", values.password, "hostname:", values.hostname);
         console.log(values)
         try {
             const res = await axios.post('http://localhost:5000/api/entities/auth', 
-            {username:values.username,password:values.password},
+            {
+                host:values.hostname,
+                username:values.username,
+                password:values.password},
             {
                 headers: {
                 "Content-type": "application/json",
@@ -40,7 +44,7 @@ const HostAdd = ({fetchedToken}) => {
             } else {
                 setError(false)
                 // console.log(props)
-                navigate("/list")
+                navigate("/console")
             }
         } catch (err) {
             console.log(err);
@@ -53,8 +57,9 @@ const HostAdd = ({fetchedToken}) => {
 
     return (
     <div className={`flex ${styles.host_add_div}`}>
-        <List />
-        <div className={`mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8`}>
+        {/* <List /> */}
+        {/* <div className={`mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8`}> */}
+        <div className='mt-16 flex flex-auto items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
             <div className={`w-full max-w-md space-y-8 shadow-xl p-4 rounded`}>
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Add Host</h2>
