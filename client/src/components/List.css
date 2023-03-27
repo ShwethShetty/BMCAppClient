@@ -1,6 +1,6 @@
 .react-dropdown-tree-select .dropdown .dropdown-content {
-    width: 370px;
-    background-color: #223348;
+    width: 365px;
+    background-color: #223348; 
   }
 
   .node.focused {
@@ -42,3 +42,12 @@
   .react-dropdown-tree-select .dropdown .dropdown-trigger{
     display: none;
   }
+
+  .dropdown-content .infinite-scroll-component {
+    overflow-y: inherit;
+    }
+
+  .dropdown-content {
+    overflow-y: auto; 
+  }
+

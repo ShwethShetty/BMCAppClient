@@ -10,7 +10,7 @@ import { render } from '@testing-library/react';
 import Table from './Table';
 import Graph from './Graph';
 
-var myTimer;
+let myTimer;
 
 const Console = ({fetchedToken}) => {
 
@@ -20,7 +20,7 @@ const Console = ({fetchedToken}) => {
     const [attributeList, setAttributeList] = useState({});
     const [selectedAttribute, setSelectedAttribute] = useState({})
 
-    // console.log("token is",fetchedToken)
+    console.log("token is",fetchedToken)
     
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const Console = ({fetchedToken}) => {
 
 
 
-        // console.log("My timer in useEffect",myTimer)
+        console.log("My timer in useEffect",myTimer)
 
     }, [selectedInstance])
 
@@ -99,7 +99,7 @@ const Console = ({fetchedToken}) => {
     // console.log("selectedAttribute before click:", selectedAttribute);
 
     return (
-    <div className={`flex ${styles.host_add_div} overflow-scroll`}>
+    <div className={`flex ${styles.host_add_div} overflow-y-scroll`}>
         <List
             getInstance = {getInstance}
         />

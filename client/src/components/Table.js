@@ -3,6 +3,7 @@ import React from "react";
 const Table = ({attributeList, getAttribute}) => {
     const onClick = (e) => {
         getAttribute(e.target.innerText)
+        
     }
 
     return (

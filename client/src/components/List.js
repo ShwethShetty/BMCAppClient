@@ -119,7 +119,9 @@ const List = ({fetchedToken, getInstance}) => {
     }
 
     return (
-        <div className={`basis-1/4 overflow-scroll`}>
+        <div className={`basis-1/4 overflow-y-scroll`}>
+         {/* <div className={`basis-1/4`}> */}
+        
             {/* {console.log(loading)} {loading===true && (<Loader/>)} */}
           <DropdownTreeSelect data={renderData} onChange={onChange} onAction={onAction} onNodeToggle={onNodeToggle} showDropdown={"always"}/>
 
