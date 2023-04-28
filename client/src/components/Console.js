@@ -37,7 +37,7 @@ const Console = ({fetchedToken}) => {
         
         myTimer = setInterval(async () => {
             try {
-                // console.log("selectedInstance:", selectedInstance);
+                console.log("selectedInstance:", selectedInstance);
                 const res = await axios.post(
                     "http://localhost:5000/api/entities/getAttributes",
                     {
@@ -51,7 +51,7 @@ const Console = ({fetchedToken}) => {
                       }
                     }
                   )
-                  // console.log(res.data)
+                  console.log(res.data)
                   setAttributeList(res.data)
                   console.log("Attribute List:", attributeList, "for instance:", selectedInstance);
             } catch (error) {
