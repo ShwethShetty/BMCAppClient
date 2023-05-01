@@ -4,10 +4,12 @@ import React, {Fragment, useContext} from 'react';
 const Host = (props) => {
   console.log("Host Rendered");
 
+  
+
   const handleSubmit = (e) => {
     const p = e.target.hostname
     console.log(e.target.hostname.value);
-    makeActiveHost(e.target.hostname.value)
+
     e.preventDefault()
   }
   return (

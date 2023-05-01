@@ -16,6 +16,7 @@ import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
 function App() {
   const [user, setUser] = useState(null)
+  const [activeHost, setActiveHost] = useState("")
 
   useEffect(() => {
     const fetchUser = async () => {
