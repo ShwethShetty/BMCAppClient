@@ -10,8 +10,29 @@ import Register from './components/Register'
 import Navbar from './components/Navbar'
 import HostAdd from './components/HostAdd'
 import Console from './components/Console';
-import {Fragment} from 'react'
+import {Fragment, useEffect} from 'react'
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {getToken} from "../redux/user/user.selector";
 function App() {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = axios.get("http://localhost:5000/api/users",
+        {
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": fetchedToken
+          }
+        }
+      )
+
+      localStorage.setItem('user', res.data)
+    }
+
+    fetchUser()
+  }, [])
   
   return (
       <Fragment>
@@ -31,4 +52,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  fetchedToken: getToken,
+});
+
+export default connect(mapStateToProps,null)(App);
