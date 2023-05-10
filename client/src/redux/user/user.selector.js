@@ -6,3 +6,8 @@ export const getToken=createSelector(
     [user],
     user=>user.token  
 )
+
+export const getId=createSelector(
+    [user],
+    user=>user.id 
+)

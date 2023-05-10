@@ -1,7 +1,8 @@
 import {UserActionTypes} from './user.types';
 
 const INITIAL_STATE={
-    token:''
+    token:'',
+    id:''
  }
  
  const userReducer=(state=INITIAL_STATE,action)=>{
@@ -11,6 +12,11 @@ const INITIAL_STATE={
                 ...state,
                 token:action.payload
             }
+        case UserActionTypes.SET_ID:
+            return{
+                ...state,
+                id:action.payload
+            }    
         default:
             return state;
         

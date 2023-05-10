@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
+import {getActiveHost} from "../redux/host/host.selector";
 import axios from 'axios';
 import {
     Chart as ChartJS,
@@ -54,7 +55,8 @@ const options = {
 //     ],
 // };
 
-const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstance}) => {
+const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstance,activeHost}) => {
+    // activeHost
     // let firstRender = true
     const isFirstRender = useRef(true)
     const [graphData, setGraphData] = useState({})
@@ -70,7 +72,9 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
                 {
                     "entity" : selectedInstance[0],
                     "instance" : selectedInstance[1],
-                    "attribute" : selectedAttribute.attributeNameValue[0]
+                    "attribute" : selectedAttribute.attributeNameValue[0],
+                    // "hostname": activeHost
+                    hostname: activeHost
                 },
                 {
                     headers: {
@@ -114,6 +118,7 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
 
         fetchHistory()
     }, [])
+    // activeHost
 
     return (
         <div className="mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">            
@@ -138,6 +143,7 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
 
 const mapStateToProps = createStructuredSelector({
     fetchedToken: getToken,
+    activeHost:getActiveHost
 });
 
 export default connect(mapStateToProps,null)(Graph);

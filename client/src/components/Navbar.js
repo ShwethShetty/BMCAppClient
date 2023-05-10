@@ -8,7 +8,7 @@ import {getToken} from "../redux/user/user.selector";
 
 var navigation = [
   { name: 'Console', href: '/console', current: false },
-  { name: 'Hosts', href: '#', current: false },
+  { name: 'Hosts', href: '/hosts', current: false },
   { name: 'Add Host', href: '/addhost', current: false },
 ]
 

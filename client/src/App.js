@@ -10,30 +10,41 @@ import Register from './components/Register'
 import Navbar from './components/Navbar'
 import HostAdd from './components/HostAdd'
 import Console from './components/Console';
-import {Fragment, useEffect} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import {getToken} from "../redux/user/user.selector";
-function App() {
-  const [user, setUser] = useState(null)
-  const [activeHost, setActiveHost] = useState("")
+import {getToken} from "./redux/user/user.selector";
+import HostList from './components/HostList';
+import axios from 'axios';
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = axios.get("http://localhost:5000/api/users",
-        {
-          headers: {
-            "Content-type": "application/json",
-            "Authorization": fetchedToken
-          }
-        }
-      )
+function App({fetchedToken}) {
+  // const [user, setUser] = useState(null)
+  // const [activeHost, setActiveHost] = useState("localhost")
 
-      localStorage.setItem('user', res.data)
-    }
+  // console.log("user in app:", user);
+  // console.log("activeHost in app:", activeHost);
 
-    fetchUser()
-  }, [])
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const res = await axios.get("http://localhost:5000/api/users",
+  //       {
+  //         headers: {
+  //           "Content-type": "application/json",
+  //           "Authorization": fetchedToken
+  //         }
+  //       }
+  //     )
+
+  //     setUser(res.data)
+  //   }
+
+  //   fetchUser()
+  // }, [])
+
+  // const getActiveHost = (selectedActiveHost) => {
+  //   console.log("selectedActiveHost:", selectedActiveHost);
+  //   // setActiveHost(selectedActiveHost)
+  // }
   
   return (
       <Fragment>
@@ -44,7 +55,10 @@ function App() {
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/list" element={<ListPage/>}/>
             <Route exact path="/addhost" element={<HostAdd/>}/>
-            <Route exact path="/console" element={<Console/>} />
+            <Route exact path="/hosts" element={<HostList/>}/> 
+            {/* activeHost={activeHost} */}
+            <Route exact path="/console" element={<Console />} />
+            {/* activeHost={activeHost} */}
             <Route exact path="/clicreds" element={<CliCredsPage/>}/>
           </Routes>
         </Router>

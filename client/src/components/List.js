@@ -12,16 +12,20 @@ import Loader from '../components/Loader';
 import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
 import './List.css'
+import { getActiveHost } from '../redux/host/host.selector';
 import React  from 'react';
 // let map;
 
-const List = ({fetchedToken, getInstance}) => {
+const List = ({fetchedToken, getInstance,activeHost}) => {
+  // activeHost
     const navigate=useNavigate()
     // console.log("fetched token in list component",fetchedToken)
     const [loading,setLoading]=useState(true);
 
     const [data,setData]=useState({});
     const [map, setMap] = useState({})
+
+    console.log("activeHost in Tree:", activeHost);
     
     useEffect(() => {
       if(fetchedToken==='')
@@ -32,7 +36,11 @@ const List = ({fetchedToken, getInstance}) => {
       try {
         async function fetchData(){
           console.log("Complete Tree called")
-            const res = await axios.get('http://localhost:5000/api/entities/getCompleteTree',
+            const res = await axios.post('http://localhost:5000/api/entities/getCompleteTree',
+            {
+              "hostname": activeHost
+              // hostname: localStorage.getItem('activeHost')
+            },
             {
               headers: {
                 "Content-type": "application/json",
@@ -65,6 +73,7 @@ const List = ({fetchedToken, getInstance}) => {
         }
       // eslint-disable-next-line
     },[]);
+    // activeHost
     
     // console.log("Tree:", data);
     // console.log("Map:", map);
@@ -133,6 +142,7 @@ const List = ({fetchedToken, getInstance}) => {
   
     const mapStateToProps = createStructuredSelector({
       fetchedToken: getToken,
+      activeHost: getActiveHost
     });
     
 

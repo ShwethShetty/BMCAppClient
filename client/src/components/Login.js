@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 // import styles from '../styles/Login.module.css'
 import axios from 'axios';
 // import Navbar from './Navbar'
-import{  setToken } from "../redux/user/user.actions";
+import{  setToken,setId } from "../redux/user/user.actions";
 import { connect } from "react-redux";
 
-const Login = ({setToken}) => {
+const Login = ({setToken,setId}) => {
     const [values,setValues]= useState({
         username:"",
         password:"",
@@ -38,6 +38,7 @@ const Login = ({setToken}) => {
         // console.log(props)
         console.log("settint token")
         setToken(res.data.token)
+        setId(res.data.id)
         navigate("/addhost")
         // navigate("/addhost",{ state: { token:res.data.token, cliVerified: false }})
         }
@@ -84,7 +85,8 @@ const Login = ({setToken}) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setToken:(token)=>dispatch(setToken(token))
+    setToken:(token)=>dispatch(setToken(token)),
+    setId:(id)=>dispatch(setId(id))
   
   });
   

@@ -4,10 +4,10 @@ import axios from 'axios';
 import List from './List';
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import {getToken} from "../redux/user/user.selector";
+import {getToken,getId} from "../redux/user/user.selector";
 import styles from '../styles/HostAdd.module.css'
 
-const HostAdd = ({fetchedToken}) => {
+const HostAdd = ({fetchedToken, user,id}) => {
     const [values,setValues]= useState({
         hostname:"",
         username:"",
@@ -25,11 +25,13 @@ const HostAdd = ({fetchedToken}) => {
         console.log("username:", values.username, "password:", values.password, "hostname:", values.hostname);
         console.log(values)
         try {
-            const res = await axios.post('http://localhost:5000/api/entities/auth', 
+            const res = await axios.post('http://localhost:5000/api/entities/hosts', 
             {
-                host:values.hostname,
-                username:values.username,
-                password:values.password},
+                hostname:values.hostname,
+                hostUsername:values.username,
+                hostPassword:values.password,
+                userId: id
+            },
             {
                 headers: {
                 "Content-type": "application/json",
@@ -53,6 +55,7 @@ const HostAdd = ({fetchedToken}) => {
 
     const onChange=(e)=>{
     setValues({...values,[e.target.name]: e.target.value});
+
     }
 
     return (
@@ -98,6 +101,7 @@ const HostAdd = ({fetchedToken}) => {
   
   const mapStateToProps = createStructuredSelector({
     fetchedToken: getToken,
+    id:getId
   });
   
 export default connect(mapStateToProps,null)(HostAdd);
