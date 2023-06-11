@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, Fragment} from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
@@ -15,6 +15,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import Loader from "./Loader";
 
 ChartJS.register(
     CategoryScale,
@@ -60,6 +61,7 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
     // let firstRender = true
     const isFirstRender = useRef(true)
     const [graphData, setGraphData] = useState({})
+    const [loading, setLoading] = useState(true)
 
     console.log("selectedAttribute in Graph", selectedAttribute);
 
@@ -114,6 +116,8 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
             }, () => {
                 console.log("graphData, should be history:", graphData);
             })
+
+            setLoading(false)
         }
 
         fetchHistory()
@@ -121,20 +125,26 @@ const Graph = ({selectedAttribute, fetchedToken, clearAttribute, selectedInstanc
     // activeHost
 
     return (
-        <div className="mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">            
+            <div className="mt-16 basis-3/4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">            
             {/* <div className="relative overflow-x-auto"> */}
             <div style={{height:"60vh",position:"relative",width: "80vh", marginBottom:"1%", padding:"1%"}}>
-            {Object.keys(graphData).length !== 0 && <Line 
-                className="h-60 w-96" 
-                options={options} 
-                data={graphData}
-                // height="200px"
-                // width="200px"
-                // options={{  }} 
-            />}
-            <button onClick={clearAttribute} className="mt-4 group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                Back
-            </button>
+            {
+                loading ? <Loader /> :
+                <Fragment>
+                    {Object.keys(graphData).length !== 0 && <Line 
+                        className="h-60 w-96" 
+                        options={options} 
+                        data={graphData}
+                        // height="200px"
+                        // width="200px"
+                        // options={{  }} 
+                    />}
+                    <button onClick={clearAttribute} className="mt-4 group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Back
+                    </button>
+                </Fragment>
+            }
+            
             </div>
             
         </div>

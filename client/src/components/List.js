@@ -14,6 +14,8 @@ import 'react-dropdown-tree-select/dist/styles.css'
 import './List.css'
 import { getActiveHost } from '../redux/host/host.selector';
 import React  from 'react';
+// import Tree from "react-animated-tree-v2";
+
 // let map;
 
 const List = ({fetchedToken, getInstance,activeHost}) => {
@@ -55,10 +57,8 @@ const List = ({fetchedToken, getInstance,activeHost}) => {
 
           setMap(res.data.displayNameServerPathMap)
 
-          // if (res.data.status === 'failure') {
-            
-          // } else {
-          //   setLoading(false)
+          // if (res.data.status !== 'failure') {
+            setLoading(false)
           // }
         }
           // console.log(loading)
@@ -98,6 +98,43 @@ const List = ({fetchedToken, getInstance,activeHost}) => {
       // console.log("ans:", ans)
       return ans
     }
+
+    const treeStyles = {
+      // left: 40,
+      width: "75%",
+      
+    };
+
+    // const renderTree = (obj) => {
+
+    //   const ans=Object.entries(obj).map((e)=>{
+    //     if(Object.keys(e[1]).length === 0){
+    //       return (
+    //         <CustomizedIconTree content={e[0]} key={e[0]}>
+    //           {/* {item.children && renderTree(item.children)} */}
+    //         </CustomizedIconTree>
+    //       )
+    //     }
+    //     else{
+    //       return (
+    //         <CustomizedIconTree content={e[0]} key={e[0]}>
+    //           {renderTree(e[1])}
+    //         </CustomizedIconTree>
+    //       )
+    //     }
+    //   })
+      // console.log("ans:", ans)
+      // return ans
+    // };
+
+    // const CustomizedIconTree = (props) => (
+    //   <Tree
+    //     // icons={{ plusIcon: plus, minusIcon: minus, closeIcon: close }}
+    //     {...props}
+    //     onItemClick={console.log("Item clicked")}
+    //     style={treeStyles}
+    //   />
+    // );
     
 
     // const res={
@@ -131,9 +168,9 @@ const List = ({fetchedToken, getInstance,activeHost}) => {
         <div className={`basis-1/4 overflow-y-scroll`}>
          {/* <div className={`basis-1/4`}> */}
         
-            {/* {console.log(loading)} {loading===true && (<Loader/>)} */}
-          <DropdownTreeSelect data={renderData} onChange={onChange} onAction={onAction} onNodeToggle={onNodeToggle} showDropdown={"always"}/>
-
+            {console.log(loading)} 
+            {loading===true ? <Loader/> : <DropdownTreeSelect data={renderData} onChange={onChange} onAction={onAction} onNodeToggle={onNodeToggle} showDropdown={"always"}/>}
+          {/* {renderTree(data)} */}
         </div> 
         
 

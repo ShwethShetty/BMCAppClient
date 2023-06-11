@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment} from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import List from './List';
@@ -10,6 +10,10 @@ import styles from '../styles/HostAdd.module.css'
 import { render } from '@testing-library/react';
 import Table from './Table';
 import Graph from './Graph';
+import Loader from './Loader';
+// import useStateWithCallback from 'use-state-with-callback';
+// import { useStateCallback } from "use-state-callback";
+
 
 let myTimer;
 
@@ -22,9 +26,11 @@ const Console = ({fetchedToken,activeHost}) => {
 
     const [selectedInstance, setSelectedInstance] = useState([])
     const [attributeList, setAttributeList] = useState({});
-    const [selectedAttribute, setSelectedAttribute] = useState({})
+    const [selectedAttribute, setSelectedAttribute] = useState({});
 
-    console.log("token is",fetchedToken)
+    const [loading, setLoading] = useState(false);
+
+    // console.log("token is",fetchedToken)
     // console.log("activeHost is:", activeHost);
     
 
@@ -39,10 +45,12 @@ const Console = ({fetchedToken,activeHost}) => {
         // }
 
         clearInterval(myTimer)
-        
-        myTimer = setInterval(async () => {
-            try {
-                console.log("selectedInstance:", selectedInstance);
+        // let counter = 0
+
+        const fetchAttributes = async () => {
+          try {
+                // console.log("selectedInstance:", selectedInstance);
+                // console.log("loading:", loading);
                 const res = await axios.post(
                     "http://localhost:5000/api/entities/getAttributes",
                     {
@@ -60,25 +68,36 @@ const Console = ({fetchedToken,activeHost}) => {
                   )
                   console.log(res.data)
                   setAttributeList(res.data)
-                  console.log("Attribute List:", attributeList, "for instance:", selectedInstance);
+                  
+                  // console.log("Attribute List:", attributeList, "for instance:", selectedInstance);
             } catch (error) {
                 console.log(error);
             }
+        }
+
+        fetchAttributes().then(() => {
+          setLoading(false)
+        })
+        
+        myTimer = setInterval(async () => {
+            await fetchAttributes()
         }, 5000);
 
+        
 
 
-        console.log("My timer in useEffect",myTimer)
+        // console.log("My timer in useEffect",myTimer)
 
     }, [selectedInstance])
     // activeHost
 
     const getInstance = (instance) => {
-        // console.log("Selected Instance:", instance);
+        console.log("getInstance called");
         // console.log("My timer in getInstance:", myTimer)
         clearInterval(myTimer)
         setSelectedInstance(instance)
-        // console.log("selectedInstance after set:", );
+        setLoading(true)
+        // setLoading(false)
     }
 
 
@@ -114,11 +133,30 @@ const Console = ({fetchedToken,activeHost}) => {
         />
         {
             Object.keys(selectedAttribute).length === 0 ?
-            <Table 
-              attributeList={attributeList} 
-              getAttribute={getAttribute} 
-              // activeHost={activeHost}
-            /> :
+            <Fragment>
+              {
+                selectedInstance.length === 0 ?
+                <div className='flex items-center justify-center w-full'>
+                  <h2>Select an instance to view it's attributes</h2>
+                </div> :
+                <Fragment>
+                  {
+                    loading ? 
+                    <div className='flex items-center justify-center w-full'>
+                      <Loader />
+                    </div>
+                     :
+                    <Table
+                      attributeList={attributeList} 
+                      getAttribute={getAttribute}
+                      // activeHost={activeHost}
+                    />
+                  }
+                </Fragment>
+                
+              }
+            </Fragment>
+             :
             <Graph 
               selectedAttribute={selectedAttribute} 
               clearAttribute={clearAttribute} 

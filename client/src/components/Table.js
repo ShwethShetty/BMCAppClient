@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 const Table = ({attributeList, getAttribute}) => {
     const onClick = (e) => {
@@ -24,25 +24,22 @@ const Table = ({attributeList, getAttribute}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {console.log("Attribute List in JSX:", attributeList)} */}
-                        {
-                           Object.keys(attributeList).map(key=>{
+                        {/* {console.log("loading in Table", loading)} */}
+                        {Object.keys(attributeList).map(key=>{
                             return (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <button onClick={onClick}>{key.toString()}</button>
-                                        </th>
-                                        <td className="px-6 py-4">
-                                            {attributeList[key][1]}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {attributeList[key][2]}
-                                        </td>
-                                    </tr>
-                              )
-                            // console.log(`${key}: ${value}`);
-                          }) 
-                        }
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <button onClick={onClick}>{key.toString()}</button>
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        {attributeList[key][1]}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {attributeList[key][2]}
+                                    </td>
+                                </tr>
+                            )}
+                        )}
                     </tbody>
                 </table>
             </div>
