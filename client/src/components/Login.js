@@ -39,7 +39,7 @@ const Login = ({setToken,setId}) => {
         console.log("settint token")
         setToken(res.data.token)
         setId(res.data.id)
-        navigate("/addhost")
+        navigate("/hosts")
         // navigate("/addhost",{ state: { token:res.data.token, cliVerified: false }})
         }
     } catch (err) {

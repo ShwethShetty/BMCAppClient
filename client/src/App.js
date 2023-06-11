@@ -54,8 +54,8 @@ function App({fetchedToken}) {
             <Route exact path="/" element={<Login/>}/>
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/list" element={<ListPage/>}/>
-            <Route exact path="/addhost" element={<HostAdd/>}/>
             <Route exact path="/hosts" element={<HostList/>}/> 
+            <Route exact path="/addhost" element={<HostAdd/>}/>
             {/* activeHost={activeHost} */}
             <Route exact path="/console" element={<Console />} />
             {/* activeHost={activeHost} */}

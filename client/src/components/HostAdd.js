@@ -46,7 +46,7 @@ const HostAdd = ({fetchedToken, user,id}) => {
             } else {
                 setError(false)
                 // console.log(props)
-                navigate("/console")
+                navigate("/hosts")
             }
         } catch (err) {
             console.log(err);
