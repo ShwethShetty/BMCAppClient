@@ -25,6 +25,15 @@ const INITIAL_STATE={
                 ...state,
                 hostList:action.payload
             }
+        case HostActionTypes.DELETE_HOST:
+            console.log("State:", state);
+            var hostList = state.hostList.filter((host) => {
+                return host.hostname !== action.payload
+            })
+            return {
+                ...state,
+                hostList
+            }
 
         default:
             return state;

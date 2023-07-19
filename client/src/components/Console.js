@@ -5,7 +5,7 @@ import List from './List';
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {getToken} from "../redux/user/user.selector";
-import { getActiveHost } from '../redux/host/host.selector';
+import { getActiveHost, getHostList } from '../redux/host/host.selector';
 import styles from '../styles/HostAdd.module.css'
 import { render } from '@testing-library/react';
 import Table from './Table';
@@ -17,7 +17,7 @@ import Loader from './Loader';
 
 let myTimer;
 
-const Console = ({fetchedToken,activeHost}) => {
+const Console = ({fetchedToken, activeHost, hostList}) => {
   // activeHost
 
     // console.log("localStorage activeHost from console:", localStorage.getItem("activeHost"));
@@ -38,6 +38,10 @@ const Console = ({fetchedToken,activeHost}) => {
 
         if(fetchedToken === '') {
             navigate("/")
+        }
+
+        if(hostList.length === 0) {
+          navigate("/addhost")
         }
 
         // if(firstRender.current) {
@@ -81,7 +85,7 @@ const Console = ({fetchedToken,activeHost}) => {
         
         myTimer = setInterval(async () => {
             await fetchAttributes()
-        }, 5000);
+        }, 60000);
 
         
 
@@ -173,7 +177,8 @@ const Console = ({fetchedToken,activeHost}) => {
   
   const mapStateToProps = createStructuredSelector({
     fetchedToken: getToken,
-    activeHost: getActiveHost
+    activeHost: getActiveHost,
+    hostList: getHostList
   });
   
 export default connect(mapStateToProps,null)(Console);

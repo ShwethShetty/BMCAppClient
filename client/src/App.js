@@ -51,8 +51,8 @@ function App({fetchedToken}) {
         <Navbar />
         <Router>
           <Routes>
-            <Route exact path="/" element={<Login/>}/>
-            <Route exact path="/register" element={<Register/>}/>
+            <Route exact path="/" element={<Register/>}/>
+            <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/list" element={<ListPage/>}/>
             <Route exact path="/hosts" element={<HostList/>}/> 
             <Route exact path="/addhost" element={<HostAdd/>}/>

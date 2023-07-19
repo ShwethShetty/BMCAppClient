@@ -67,6 +67,10 @@ const Login = ({setToken,setId}) => {
                         <label htmlFor="password" className="sr-only">Password</label>
                         <input onChange={onChange} id="password" name="password" type="password" autoComplete="current-password" required className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
                     </div>
+                    <div>
+                        <span>Don't have an account? </span>
+                        <a href="http://localhost:3000/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sign-up</a>
+                    </div>
                     { error &&
                         <div className="invalidcred">
                             INCORRECT USERNAME OR PASSWORD

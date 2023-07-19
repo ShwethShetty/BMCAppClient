@@ -14,3 +14,8 @@ export const setHostList=hostList=>({
     type:HostActionTypes.SET_HOST_LIST,
     payload:hostList
 })
+
+export const deleteHost = hostname => ({
+    type: HostActionTypes.DELETE_HOST,
+    payload: hostname
+})

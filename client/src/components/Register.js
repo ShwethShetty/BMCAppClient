@@ -67,6 +67,10 @@ const Register = (props) => {
                         <label htmlFor="confirmPassword" className="sr-only">Confirm password</label>
                         <input onChange={onChange} id="confirmPassword" name="confirmPassword" type="password" required className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Confirm Password" pattern={values.password}/>
                     </div>
+                    <div>
+                        <span>Already have an account? </span>
+                        <a href="http://localhost:3000/login" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Login</a>
+                    </div>
                     { error &&
                         <div className="invalidcred">
                             INCORRECT USERNAME OR PASSWORD

@@ -41,7 +41,7 @@ const HostAdd = ({fetchedToken, user,id}) => {
             )
             console.log(res.data.result);
             console.log(res.data)
-            if (res.data.result !== 'Success') {
+            if (res.data.status !== 'success') {
                 setError(true)
             } else {
                 setError(false)

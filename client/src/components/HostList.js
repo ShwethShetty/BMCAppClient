@@ -10,7 +10,7 @@ import {setActiveHost,setHostList} from '../redux/host/host.actions'
 import axios from 'axios';
 
 
-const HostList = ({user, fetchedToken, activeHost,setHostList,hostList,id}) => {
+const HostList = ({user, fetchedToken, activeHost,setHostList,hostList,id, setActiveHost}) => {
  
   // const { isAuthenticated, loading } = authState;
   // const [hosts, setHosts] = useState([])
@@ -33,6 +33,10 @@ const HostList = ({user, fetchedToken, activeHost,setHostList,hostList,id}) => {
         )
         // setHosts(res.data.result)
         setHostList(res.data.result)
+        if(hostList.length === 1) {
+          console.log("hostList in HostList.js:", hostList);
+          setActiveHost(hostList[0].hostname)
+        }
       } catch (error) {
         console.log(error)
       }
